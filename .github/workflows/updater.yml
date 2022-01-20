@@ -1,0 +1,30 @@
+name: AUR Updater
+
+on:
+  schedule:
+    - cron: 0 8,12 * * *
+  push:
+    branches:
+      - main
+
+env:
+  GITHUB_TOKEN: ${{ secrets.GH_TOKEN}}
+  AUR_PRIVKEY: ${{ secrets.AUR_PRIVKEY }}
+  REPO: https://github.com/cpt-huntsman/trilium-cn-aur-package
+
+jobs:
+  Updater:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Update Protocol
+      run: |
+        echo ${ssh_privkey} > ssh_privkey
+        ./updater.sh
+
+    - name: Print Result
+      if: always()
+      run: |
+        cat message
