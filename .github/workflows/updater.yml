@@ -10,7 +10,7 @@ on:
 env:
   GITHUB_TOKEN: ${{ secrets.GH_TOKEN}}
   AUR_PRIVKEY: ${{ secrets.AUR_PRIVKEY }}
-  REPO: https://github.com/cpt-huntsman/trilium-cn-aur-package
+  REPO: https://github.com/alca7raz/trilium-cn-aur-package
 
 jobs:
   Updater:
