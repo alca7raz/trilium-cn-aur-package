@@ -22,7 +22,7 @@ jobs:
     - name: Update Protocol
       run: |
         mkdir -p ~/.ssh
-        echo ${AUR_PRIVKEY} > ~/.ssh/id_ed25519
+        echo -en ${AUR_PRIVKEY} > ~/.ssh/id_ed25519
         chmod 600 ~/.ssh/id_ed25519
         ssh-keyscan aur.archlinux.org >> ~/.ssh/known_hosts
         ./updater.sh
