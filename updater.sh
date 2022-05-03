@@ -2,8 +2,11 @@
 
 rm -f message
 
-raw_version=$(curl https://github.com/Nriver/trilium-translation/releases/latest)
-latest_version=$(echo ${raw_version} | awk -F'<html><body>You are being <a href="https://github.com/Nriver/trilium-translation/releases/tag/v' '{print $2}' | awk -F'">redirected</a>.</body></html>' '{print $1}')
+latest_version=$(curl -H "Accept: application/vnd.github.v3+json" https://api.github.com/repos/Nriver/trilium-translation/releases |\
+    grep "tag_name" | awk -F': ' '{print $2}' | sed 's/[",v]//g' | sed -n '1p')
+[[ $? != 0 ]] && echo -e "\e[31mERROR\e[0m: Get version failed. Curl quit unexpected." >> message && exit 2
+[[ -z ${latest_version} ]] && echo -e "\e[31mERROR\e[0m: Get version failed. Curl result is empty." >> message && exit 3
+
 last_version=$(cat LATEST)
 
 echo -e "\e[32mLATEST VERSION\e[0m: ${latest_version}" >> message
